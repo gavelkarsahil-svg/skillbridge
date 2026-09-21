@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillBridge | Checkout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SkillBridge logo" class="logo-icon">
+      SKILLBRIDGE
+    </a>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="courses.html#addons">Store</a>
+    </div>
+    <div class="nav-right">
+      <div class="auth-area" id="authArea"></div>
+      <button class="cart-btn" id="drawerToggle">CART · <span id="cartCount">0</span></button>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow eyebrow-light">FINAL STEP</div>
+    <h1 class="page-h1">CHECKOUT</h1>
+    <p class="page-sub">Review your cart, add your details, and submit — free tracks need no payment.</p>
+  </div>
+</section>
+
+<section class="checkout">
+  <div class="wrap">
+
+    <div id="checkoutEmpty" class="empty-cart" hidden>
+      <p>Your cart is empty. <a href="courses.html">Browse courses and add-ons →</a></p>
+    </div>
+
+    <div class="checkout-grid" id="checkoutInfoPanel">
+      <div class="checkout-panel">
+        <h3>ORDER SUMMARY</h3>
+        <div id="checkoutSummary"></div>
+        <div class="checkout-total-line">
+          <span>Total Due Today</span>
+          <span id="checkoutTotal">$0</span>
+        </div>
+      </div>
+
+      <div class="checkout-panel">
+        <h3>YOUR DETAILS</h3>
+        <form id="checkoutForm" novalidate>
+          <div class="form-row">
+            <label for="checkoutName">Full Name</label>
+            <input type="text" id="checkoutName" required placeholder="Your full name">
+          </div>
+          <div class="form-row form-row-half">
+            <div>
+              <label for="checkoutEmail">Email</label>
+              <input type="email" id="checkoutEmail" required placeholder="you@example.com">
+            </div>
+            <div>
+              <label for="checkoutPhone">Phone Number</label>
+              <input type="tel" id="checkoutPhone" required placeholder="e.g. 010 123 4567">
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="checkoutWhy">Why do you want to join? <span class="optional">(optional)</span></label>
+            <textarea id="checkoutWhy" rows="3" placeholder="Tell us a bit about your goals..."></textarea>
+          </div>
+
+          <fieldset id="paymentFieldset" hidden>
+            <legend>PAYMENT DETAILS</legend>
+            <div class="payment-note">This is a demo checkout — no real payment is processed. Please don't enter real card details.</div>
+            <div class="form-row">
+              <label for="cardName">Name on Card</label>
+              <input type="text" id="cardName" placeholder="As shown on card">
+            </div>
+            <div class="form-row">
+              <label for="cardNumber">Card Number</label>
+              <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19">
+            </div>
+            <div class="form-row form-row-half">
+              <div>
+                <label for="cardExpiry">Expiry</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5">
+              </div>
+              <div>
+                <label for="cardCvv">CVV</label>
+                <input type="text" id="cardCvv" placeholder="123" maxlength="4">
+              </div>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary btn-full" id="placeOrderBtn">SUBMIT APPLICATION</button>
+          <p class="form-note">Your order is saved in this browser only — not sent to a real server.</p>
+        </form>
+      </div>
+    </div>
+
+    <div class="checkout-panel success-panel" id="checkoutSuccess" hidden>
+      <div class="success-icon">✓</div>
+      <h3>You're in!</h3>
+      <p>Order ID: <strong class="order-id"></strong></p>
+      <p>Total charged: <strong class="order-total"></strong></p>
+      <p>We've "saved" your application to this browser. A real deployment would email you a confirmation here.</p>
+      <div class="btn-row" style="justify-content:center; margin-top:24px;">
+        <a href="index.html" class="btn btn-primary">BACK TO HOME</a>
+        <a href="courses.html#orders" class="btn btn-ghost-dark" style="color:var(--navy); border-color:var(--border);">VIEW MY ORDERS</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-top">
+    <div>
+      <div class="brand-f">
+        <img src="assets/logo.png" alt="SkillBridge logo" class="logo-icon">
+        SKILLBRIDGE
+      </div>
+      <p class="note">A free digital skills bootcamp helping unemployed youth build careers in design, code, marketing, and IT.</p>
+    </div>
+    <div>
+      <h5>Program</h5>
+      <ul>
+        <li><a href="courses.html">All Tracks</a></li>
+        <li><a href="courses.html#addons">Store / Add-ons</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+        <li><a href="mailto:hello@skillbridge.example">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Stay Updated</h5>
+      <p class="note">Get notified about new cohorts and tracks.</p>
+      <form class="newsletter" id="newsletterForm">
+        <input type="email" id="newsletterEmail" placeholder="you@example.com" required>
+        <button type="submit">JOIN</button>
+      </form>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 SkillBridge Inc.</span>
+    <span>A fictional program created for a college coursework project.</span>
+  </div>
+</footer>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>MY CART</h3>
+    <button id="drawerClose" aria-label="Close">×</button>
+  </div>
+  <div class="drawer-list" id="drawerList"></div>
+  <div class="drawer-footer">
+    <div class="drawer-total"><span>Total</span><strong id="drawerTotal">$0</strong></div>
+    <a href="checkout.html" class="btn btn-primary btn-full">PROCEED TO CHECKOUT</a>
+  </div>
+</aside>
+
+<div class="modal-overlay" id="loginOverlay"></div>
+<div class="login-modal" id="loginModal">
+  <div class="login-modal-head">
+    <h3>Welcome to SkillBridge</h3>
+    <button id="loginModalClose" aria-label="Close">×</button>
+  </div>
+  <div class="login-tabs">
+    <button class="login-tab active" id="tabLogin" type="button">LOG IN</button>
+    <button class="login-tab" id="tabSignup" type="button">SIGN UP</button>
+  </div>
+  <form id="loginForm">
+    <div class="form-row">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required placeholder="you@example.com">
+    </div>
+    <div class="form-row">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" required placeholder="••••••••">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">LOG IN</button>
+    <p class="form-note">Demo login — any email/password works. No real account is created.</p>
+  </form>
+  <form id="signupForm" hidden>
+    <div class="form-row">
+      <label for="signupName">Full Name</label>
+      <input type="text" id="signupName" required placeholder="Your full name">
+    </div>
+    <div class="form-row">
+      <label for="signupEmail">Email</label>
+      <input type="email" id="signupEmail" required placeholder="you@example.com">
+    </div>
+    <div class="form-row">
+      <label for="signupPassword">Password</label>
+      <input type="password" id="signupPassword" required placeholder="••••••••">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">CREATE ACCOUNT</button>
+    <p class="form-note">Demo signup — stored in your browser only, not a real account system.</p>
+  </form>
+</div>
+
+<div class="toast" id="toast">Added to cart</div>
+
+<script src="script.js"></script>
+</body>
+</html>
