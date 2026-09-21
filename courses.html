@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillBridge | Courses</title>
-<meta name="description" content="Browse SkillBridge's free digital skills tracks and optional paid add-ons — graphic design, coding, digital marketing, IT support, UI/UX, and cybersecurity.">
+<title>SkillBridge | Home</title>
+<meta name="description" content="SkillBridge is a free digital skills bootcamp helping unemployed youth learn graphic design, coding, digital marketing, and IT — and get hired.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -14,12 +14,12 @@
 <header>
   <nav class="wrap">
     <a href="index.html" class="brand">
-      <img src="assets/logo.png" alt="SkillBridge logo" class="logo-icon">
+      <img src="logo.png" alt="SkillBridge logo" class="logo-icon">
       SKILLBRIDGE
     </a>
     <div class="navlinks">
-      <a href="index.html">Home</a>
-      <a href="courses.html" class="active">Courses</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="courses.html">Courses</a>
       <a href="courses.html#addons">Store</a>
     </div>
     <div class="nav-right">
@@ -29,198 +29,96 @@
   </nav>
 </header>
 
-<section class="page-hero">
-  <div class="wrap">
-    <div class="eyebrow eyebrow-light">CHOOSE YOUR PATH</div>
-    <h1 class="page-h1">THE TRACKS</h1>
-    <p class="page-sub">Six in-demand digital skills, all free to apply for. Add a track to your cart, then check out to apply.</p>
+<section class="hero-dark">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="pill pill-cyan">100% FREE COURSES · OPTIONAL PAID ADD-ONS</div>
+      <h1>UNLOCK YOUR<br>DIGITAL <span class="highlight">CAREER</span></h1>
+      <p class="lead">A free bootcamp for unemployed young people who want a real shot at a digital career — graphic design, coding, marketing, and IT. Add a track to your cart, apply in minutes, no degree required.</p>
+      <div class="btn-row">
+        <a href="courses.html" class="btn btn-primary">BUY / ADD COURSES</a>
+        <a href="#how" class="btn btn-ghost-dark">HOW IT WORKS</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-card card-1">
+        <span class="tag tag-blue">Graphic Design</span>
+        <div class="bars"><i style="--h:40%"></i><i style="--h:70%"></i><i style="--h:55%"></i><i style="--h:90%"></i></div>
+      </div>
+      <div class="visual-card card-2">
+        <span class="tag tag-coral">Coding</span>
+        <code>&lt;/&gt; building...</code>
+      </div>
+      <div class="visual-card card-3">
+        <span class="tag tag-cyan">Digital Marketing</span>
+        <div class="pulse-dot"></div>
+        <span class="small">Campaign live</span>
+      </div>
+    </div>
+  </div>
+  <div class="stat-strip wrap">
+    <div class="stat"><strong>6</strong><span>Career Tracks</span></div>
+    <div class="stat"><strong>0 EGP</strong><span>Base Program Cost</span></div>
+    <div class="stat"><strong>1:1</strong><span>Mentor Support</span></div>
+    <div class="stat"><strong>✓</strong><span>Certificate on Completion</span></div>
   </div>
 </section>
 
-<section class="courses">
+<section class="how" id="how">
   <div class="wrap">
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All Tracks</button>
-      <button class="filter-btn" data-filter="design">Design</button>
-      <button class="filter-btn" data-filter="coding">Coding</button>
-      <button class="filter-btn" data-filter="marketing">Marketing</button>
-      <button class="filter-btn" data-filter="it">IT</button>
-    </div>
-
-    <div class="grid" id="courseGrid">
-
-      <div class="course-card" data-category="design" data-cart-name="Graphic Design Fundamentals" data-cart-price="0" data-cart-type="track">
-        <div class="course-icon icon-blue">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="4" stroke="#2F6FED" stroke-width="1.6"/><circle cx="16" cy="16" r="4" stroke="#2F6FED" stroke-width="1.6"/><path d="M8 12v4a4 4 0 0 0 4 4h4" stroke="#2F6FED" stroke-width="1.6"/></svg>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-blue">Beginner</span>
-          <span class="tag tag-outline">8 weeks</span>
-          <span class="tag tag-price">FREE</span>
-        </div>
-        <h3>Graphic Design Fundamentals</h3>
-        <p class="desc">Photoshop, Illustrator, and Canva basics — typography, color, and branding. Finish with a personal portfolio.</p>
-        <button class="add-btn">ADD TO CART</button>
+    <div class="eyebrow">HOW IT WORKS</div>
+    <h2>From cart to job-ready, in four steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Add to Cart</h3>
+        <p>Add a free course track — and any paid add-ons you want — from the Courses page.</p>
       </div>
-
-      <div class="course-card" data-category="coding" data-cart-name="Web Development & Coding" data-cart-price="0" data-cart-type="track">
-        <div class="course-icon icon-coral">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M8 8L3 12L8 16" stroke="#FF6B4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 8L21 12L16 16" stroke="#FF6B4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 5L10 19" stroke="#FF6B4A" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-coral">Beginner–Intermediate</span>
-          <span class="tag tag-outline">12 weeks</span>
-          <span class="tag tag-price">FREE</span>
-        </div>
-        <h3>Web Development & Coding</h3>
-        <p class="desc">HTML, CSS, JavaScript, and an intro to Python. Build three real projects you can show employers.</p>
-        <button class="add-btn">ADD TO CART</button>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Check Out & Apply</h3>
+        <p>Submit your details at checkout. Free tracks need no payment — add-ons are billed at checkout.</p>
       </div>
-
-      <div class="course-card" data-category="marketing" data-cart-name="Digital Marketing" data-cart-price="0" data-cart-type="track">
-        <div class="course-icon icon-cyan">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 11L12 4L21 11" stroke="#0D9C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10V19H19V10" stroke="#0D9C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 19V14H14V19" stroke="#0D9C8E" stroke-width="1.6"/></svg>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-cyan">Beginner</span>
-          <span class="tag tag-outline">6 weeks</span>
-          <span class="tag tag-price">FREE</span>
-        </div>
-        <h3>Digital Marketing</h3>
-        <p class="desc">Social media strategy, SEO basics, content creation, and how to run a first ad campaign.</p>
-        <button class="add-btn">ADD TO CART</button>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Learn & Build</h3>
+        <p>Weekly live sessions plus hands-on projects, with a mentor checking your progress.</p>
       </div>
-
-      <div class="course-card" data-category="it" data-cart-name="IT Support & Networking" data-cart-price="0" data-cart-type="track">
-        <div class="course-icon icon-blue">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="1.5" stroke="#2F6FED" stroke-width="1.6"/><path d="M8 20h8M12 16v4" stroke="#2F6FED" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-blue">Beginner</span>
-          <span class="tag tag-outline">8 weeks</span>
-          <span class="tag tag-price">FREE</span>
-        </div>
-        <h3>IT Support & Networking</h3>
-        <p class="desc">Troubleshooting, networking fundamentals, and help-desk skills — prep for entry-level IT certifications.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-      <div class="course-card" data-category="design" data-cart-name="UI/UX Design" data-cart-price="0" data-cart-type="track">
-        <div class="course-icon icon-coral">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#FF6B4A" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#FF6B4A" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-coral">Beginner</span>
-          <span class="tag tag-outline">6 weeks</span>
-          <span class="tag tag-price">FREE</span>
-        </div>
-        <h3>UI/UX Design</h3>
-        <p class="desc">Wireframing, prototyping in Figma, and the basics of user research — design your first app screen.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-      <div class="course-card" data-category="it" data-cart-name="Cybersecurity Fundamentals" data-cart-price="0" data-cart-type="track">
-        <div class="course-icon icon-cyan">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L20 6V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V6L12 3Z" stroke="#0D9C8E" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.5 12L11.3 13.8L14.8 10.2" stroke="#0D9C8E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="tag-row">
-          <span class="tag tag-cyan">Beginner</span>
-          <span class="tag tag-outline">6 weeks</span>
-          <span class="tag tag-price">FREE</span>
-        </div>
-        <h3>Cybersecurity Fundamentals</h3>
-        <p class="desc">Core security concepts, safe practices, and an intro to how businesses protect their data.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="addons" id="addons">
-  <div class="wrap">
-    <div class="eyebrow">OPTIONAL EXTRAS</div>
-    <h2>Boost your track with an add-on</h2>
-    <p class="page-sub" style="color:var(--text-soft); margin: 8px 0 26px;">Courses stay free — these are optional paid extras you can add at checkout.</p>
-
-    <div class="addons-grid">
-
-      <div class="addon-card" data-cart-name="Verified Certificate" data-cart-price="15" data-cart-type="addon">
-        <div class="course-icon icon-blue">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="6" stroke="#2F6FED" stroke-width="1.6"/><path d="M8.5 14L7 21L12 18.5L17 21L15.5 14" stroke="#2F6FED" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="tag-row"><span class="tag tag-price">$15</span></div>
-        <h3>Verified Certificate</h3>
-        <p class="desc">A signed, shareable certificate for LinkedIn and job applications.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-      <div class="addon-card" data-cart-name="1:1 Mentorship Pack (4 sessions)" data-cart-price="40" data-cart-type="addon">
-        <div class="course-icon icon-coral">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="#FF6B4A" stroke-width="1.6"/><path d="M4 20c0-3 2.5-5 5-5s5 2 5 5" stroke="#FF6B4A" stroke-width="1.6"/><circle cx="17" cy="9" r="2.4" stroke="#FF6B4A" stroke-width="1.6"/></svg>
-        </div>
-        <div class="tag-row"><span class="tag tag-price">$40</span></div>
-        <h3>1:1 Mentorship Pack</h3>
-        <p class="desc">Four extra one-on-one sessions with a mentor in your field.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-      <div class="addon-card" data-cart-name="Starter Laptop Kit Rental (1 month)" data-cart-price="30" data-cart-type="addon">
-        <div class="course-icon icon-cyan">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="10" rx="1.2" stroke="#0D9C8E" stroke-width="1.6"/><path d="M2 19h20" stroke="#0D9C8E" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <div class="tag-row"><span class="tag tag-price">$30</span></div>
-        <h3>Laptop Kit Rental</h3>
-        <p class="desc">A month's laptop rental for students who need a device for class.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-      <div class="addon-card" data-cart-name="Priority Cohort Placement" data-cart-price="10" data-cart-type="addon">
-        <div class="course-icon icon-blue">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H11L10 22L20 9H13L13 2Z" stroke="#2F6FED" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="tag-row"><span class="tag tag-price">$10</span></div>
-        <h3>Priority Placement</h3>
-        <p class="desc">Skip the queue and start in the very next cohort instead of waiting.</p>
-        <button class="add-btn">ADD TO CART</button>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="faq" id="faq">
-  <div class="wrap">
-    <div class="eyebrow">FAQ</div>
-    <h2>Common questions</h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-question">Is the program really free?<span></span></button>
-        <div class="faq-answer"><p>Yes — all six course tracks are free to apply for and attend. The add-ons above (certificate, mentorship, etc.) are optional paid extras, not required to join.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Do I need any experience?</button>
-        <div class="faq-answer"><p>No prior experience is required for any track. Sessions start from the basics and build up.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Can I apply for more than one track?</button>
-        <div class="faq-answer"><p>You can add multiple tracks to your cart, but we recommend focusing on one at a time to get the most out of mentorship and project time.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">How is this checkout different from a real purchase?</button>
-        <div class="faq-answer"><p>This is a coursework demo — the cart and checkout run entirely in your browser. No real payment is processed, and no data leaves your device.</p></div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Graduate & Get Hired</h3>
+        <p>Leave with a portfolio, a certificate, and resume + interview prep to land a job.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="register" id="orders">
+<section class="stories" id="stories">
   <div class="wrap">
-    <div class="my-registrations" id="myOrders" hidden>
-      <div class="eyebrow">MY ORDERS (this browser)</div>
-      <div id="myOrdersList" class="reg-list"></div>
-      <button class="link-btn" id="clearOrders">Clear all</button>
+    <div class="eyebrow eyebrow-light">GRADUATE STORIES</div>
+    <h2 class="light-h">Real people, new careers</h2>
+    <div class="story-grid">
+      <div class="story-card">
+        <p>"I had never touched a line of code before this program. Six months later I'm working as a junior developer."</p>
+        <span class="story-name">— Amara O., Web Development Graduate</span>
+      </div>
+      <div class="story-card">
+        <p>"The mentor sessions made the difference. I finally had someone to ask the 'dumb questions' to."</p>
+        <span class="story-name">— Karim T., Digital Marketing Graduate</span>
+      </div>
+      <div class="story-card">
+        <p>"I built my first real portfolio in this bootcamp. It's what got me my first design client."</p>
+        <span class="story-name">— Naledi M., Graphic Design Graduate</span>
+      </div>
     </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap cta-inner">
+    <h2>Ready to start?</h2>
+    <p>Browse all six tracks, add the ones you're interested in, and check out.</p>
+    <a href="courses.html" class="btn btn-primary">EXPLORE COURSES</a>
   </div>
 </section>
 
@@ -228,7 +126,7 @@
   <div class="wrap footer-top">
     <div>
       <div class="brand-f">
-        <img src="assets/logo.png" alt="SkillBridge logo" class="logo-icon">
+        <img src="logo.png" alt="SkillBridge logo" class="logo-icon">
         SKILLBRIDGE
       </div>
       <p class="note">A free digital skills bootcamp helping unemployed youth build careers in design, code, marketing, and IT.</p>
