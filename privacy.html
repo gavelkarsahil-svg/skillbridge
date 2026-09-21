@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillBridge | Privacy Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SkillBridge logo" class="logo-icon">
+      SKILLBRIDGE
+    </a>
+    <div class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="courses.html#addons">Store</a>
+    </div>
+    <div class="nav-right">
+      <div class="auth-area" id="authArea"></div>
+      <button class="cart-btn" id="drawerToggle">CART · <span id="cartCount">0</span></button>
+    </div>
+  </nav>
+</header>
+
+<section class="legal">
+  <div class="wrap">
+    <div class="eyebrow">LEGAL</div>
+    <h1 class="page-h1-light">Privacy Policy</h1>
+    <p class="legal-updated">Last updated: August 2026</p>
+
+    <div class="legal-body">
+      <p>This page is a placeholder written for a college coursework project. SkillBridge is a fictional program — no real data collection, tracking, or third-party sharing takes place.</p>
+
+      <h3>What this demo site stores</h3>
+      <p>The live version of this site saves cart items, applications, and orders to your own browser's local storage only. Nothing is transmitted to a server or seen by anyone else. Clearing your browser data, or the "Clear all" buttons on this site, removes it.</p>
+
+      <h3>Login / Sign Up</h3>
+      <p>The Login and Sign Up forms on this site are a UI demonstration only. Any email and password combination is accepted, and no real account or password is created or verified anywhere.</p>
+
+      <h3>Checkout</h3>
+      <p>Card details entered at checkout are never transmitted anywhere — they exist only in the browser during the demo and are not stored, validated, or charged.</p>
+
+      <h3>What a real version of this policy would cover</h3>
+      <p>A production privacy policy would typically explain what personal information is collected (name, email, phone), why it's collected (to process bootcamp applications and orders), how long it's retained, whether it's shared with partner organizations, and how a user can request their data be deleted.</p>
+
+      <h3>Contact</h3>
+      <p>Questions about this coursework project can be directed to <a href="mailto:hello@skillbridge.example">hello@skillbridge.example</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-top">
+    <div>
+      <div class="brand-f">
+        <img src="assets/logo.png" alt="SkillBridge logo" class="logo-icon">
+        SKILLBRIDGE
+      </div>
+      <p class="note">A free digital skills bootcamp helping unemployed youth build careers in design, code, marketing, and IT.</p>
+    </div>
+    <div>
+      <h5>Program</h5>
+      <ul>
+        <li><a href="courses.html">All Tracks</a></li>
+        <li><a href="courses.html#addons">Store / Add-ons</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+        <li><a href="mailto:hello@skillbridge.example">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Stay Updated</h5>
+      <p class="note">Get notified about new cohorts and tracks.</p>
+      <form class="newsletter" id="newsletterForm">
+        <input type="email" id="newsletterEmail" placeholder="you@example.com" required>
+        <button type="submit">JOIN</button>
+      </form>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 SkillBridge Inc.</span>
+    <span>A fictional program created for a college coursework project.</span>
+  </div>
+</footer>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>MY CART</h3>
+    <button id="drawerClose" aria-label="Close">×</button>
+  </div>
+  <div class="drawer-list" id="drawerList"></div>
+  <div class="drawer-footer">
+    <div class="drawer-total"><span>Total</span><strong id="drawerTotal">$0</strong></div>
+    <a href="checkout.html" class="btn btn-primary btn-full">PROCEED TO CHECKOUT</a>
+  </div>
+</aside>
+
+<div class="modal-overlay" id="loginOverlay"></div>
+<div class="login-modal" id="loginModal">
+  <div class="login-modal-head">
+    <h3>Welcome to SkillBridge</h3>
+    <button id="loginModalClose" aria-label="Close">×</button>
+  </div>
+  <div class="login-tabs">
+    <button class="login-tab active" id="tabLogin" type="button">LOG IN</button>
+    <button class="login-tab" id="tabSignup" type="button">SIGN UP</button>
+  </div>
+  <form id="loginForm">
+    <div class="form-row">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required placeholder="you@example.com">
+    </div>
+    <div class="form-row">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" required placeholder="••••••••">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">LOG IN</button>
+    <p class="form-note">Demo login — any email/password works. No real account is created.</p>
+  </form>
+  <form id="signupForm" hidden>
+    <div class="form-row">
+      <label for="signupName">Full Name</label>
+      <input type="text" id="signupName" required placeholder="Your full name">
+    </div>
+    <div class="form-row">
+      <label for="signupEmail">Email</label>
+      <input type="email" id="signupEmail" required placeholder="you@example.com">
+    </div>
+    <div class="form-row">
+      <label for="signupPassword">Password</label>
+      <input type="password" id="signupPassword" required placeholder="••••••••">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">CREATE ACCOUNT</button>
+    <p class="form-note">Demo signup — stored in your browser only, not a real account system.</p>
+  </form>
+</div>
+
+<div class="toast" id="toast">Added to cart</div>
+
+<script src="script.js"></script>
+</body>
+</html>
