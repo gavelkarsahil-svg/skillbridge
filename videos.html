@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillBridge – Watch</title>
+<style>
+  :root{--bg:#f6f7fb;--card:#fff;--ink:#1b2333;--muted:#6b7385;--brand:#2f5bea;--ok:#1a9a5b;--line:#e2e5ee}
+  @media (prefers-color-scheme:dark){:root{--bg:#12151d;--card:#1b2030;--ink:#eef0f6;--muted:#9aa2b5;--line:#2a3045}}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  header{padding:16px 20px;border-bottom:1px solid var(--line);background:var(--card);font-weight:700}
+  main{max-width:1000px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:800px){main{grid-template-columns:2fr 1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .ratio{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden}
+  .ratio>div,.ratio iframe{position:absolute;inset:0;width:100%;height:100%}
+  h2{font-size:1.1rem;margin:12px 0 4px}
+  .muted{color:var(--muted);font-size:.9rem}
+  .bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:8px 0}
+  .bar i{display:block;height:100%;width:0;background:var(--brand);transition:width .4s}
+  ul{list-style:none;margin:0;padding:0}
+  li button{width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 4px;font:inherit;color:inherit;cursor:pointer;display:flex;gap:10px;align-items:center}
+  li button:hover{background:var(--bg)}
+  li button:focus-visible{outline:2px solid var(--brand)}
+  li.active button{font-weight:700;color:var(--brand)}
+  .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:11px;color:#fff}
+  li.done .dot{background:var(--ok);border-color:var(--ok)}
+  #status{margin-top:8px}
+</style>
+</head>
+<body>
+<header>SkillBridge</header>
+<main>
+  <section class="card">
+    <div class="ratio"><div id="player"></div></div>
+    <h2 id="title"></h2>
+    <div class="muted" id="status">Press play to start.</div>
+  </section>
+  <aside class="card">
+    <strong>All courses</strong>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="muted" id="progressText"></div>
+    <ul id="list"></ul>
+  </aside>
+</main>
+
+<script>
+/* ===== EDIT THIS: 6 courses, 1 YouTube link each ===== */
+const COURSES = [
+  { id:"design",    name:"Graphic Design Fundamentals",  url:"https://youtu.be/e_dv7GBHka8" },
+  { id:"coding",    name:"Web Development & Coding",     url:"https://youtu.be/nu_pCVPKzTk" },
+  { id:"marketing", name:"Digital Marketing",            url:"https://youtu.be/kunkYTKFNtI" },
+  { id:"it",        name:"IT Support & Networking",      url:"https://youtu.be/vGjH9leVXaM" },
+  { id:"uiux",      name:"UI/UX Design",                 url:"https://youtu.be/Q34GJLt4FAY" },
+  { id:"cyber",     name:"Cybersecurity Fundamentals",   url:"https://youtu.be/Asurd09LmCU" }
+];
+const COMPLETE_AT = 0.9; // done at 90% watched
+/* ===================================================== */
+
+const KEY = "skillbridge:progress";
+let progress = load();   // { done:{courseId:true}, time:{courseId:seconds} }
+let current = Math.max(0, COURSES.findIndex(c=>c.id===new URLSearchParams(location.search).get("course")));
+let player;
+
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {done:{},time:{}}; }catch(e){ return {done:{},time:{}}; } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(progress)); }catch(e){} /* later: also save to Firebase/Supabase */ }
+function videoId(url){ const m = url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : url; }
+
+function render(){
+  const c = COURSES[current];
+  document.getElementById("title").textContent = c.name;
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  COURSES.forEach((x,i)=>{
+    const li = document.createElement("li");
+    if(progress.done[x.id]) li.classList.add("done");
+    if(i===current) li.classList.add("active");
+    li.innerHTML = '<button><span class="dot">'+(progress.done[x.id]?"✓":"")+'</span></button>';
+    li.querySelector("button").append(x.name);
+    li.querySelector("button").onclick = ()=>play(i);
+    list.appendChild(li);
+  });
+  const n = Object.keys(progress.done).length;
+  document.getElementById("barFill").style.width = (n/COURSES.length*100)+"%";
+  document.getElementById("progressText").textContent = n+" of "+COURSES.length+" courses complete";
+}
+
+function markComplete(id){
+  if(progress.done[id]) return;
+  progress.done[id] = true;
+  save(); render();
+  document.getElementById("status").textContent = "Course complete ✓";
+  // Certificate step goes here later
+}
+
+function play(i){
+  current = i;
+  player.loadVideoById({ videoId: videoId(COURSES[i].url), startSeconds: Math.floor(progress.time[COURSES[i].id]||0) });
+  render();
+}
+
+function tick(){
+  if(!player || !player.getDuration || player.getPlayerState()!==YT.PlayerState.PLAYING) return;
+  const t = player.getCurrentTime(), d = player.getDuration(), id = COURSES[current].id;
+  if(!d) return;
+  progress.time[id] = t;
+  document.getElementById("status").textContent = "Watched "+Math.round(t/d*100)+"%";
+  if(t/d >= COMPLETE_AT) markComplete(id);
+  save();
+}
+
+function onYouTubeIframeAPIReady(){
+  player = new YT.Player("player", {
+    videoId: videoId(COURSES[current].url), // starts at the course from ?course=...
+    
+    playerVars: { rel:0, modestbranding:1, playsinline:1 },
+    events: { onStateChange: e=>{ if(e.data===YT.PlayerState.ENDED) markComplete(COURSES[current].id); } }
+  });
+  setInterval(tick, 3000);
+}
+
+render();
+const s = document.createElement("script");
+s.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(s);
+</script>
+</body>
+</html>
