@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>SkillBridge | Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213d; --soft:#5d6880; --line:#dfe4ee; --bg:#f4f6fb; --card:#fff;
+    --blue:#2F6FED; --coral:#FF6B4A; --teal:#0D9C8E; --green:#1a9a5b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ink:#e8ecf6; --soft:#9aa5bd; --line:#2a3550; --bg:#0f1526; --card:#171f36; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+  h1,h2,.num{font-family:"Space Grotesk",Inter,sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  .top{border-bottom:1px solid var(--line);background:var(--card)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+  .top h1{margin:0;font-size:1.25rem}
+  .who{display:flex;align-items:center;gap:12px;color:var(--soft);font-size:.9rem}
+  button,.btn{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px}
+  button:hover{border-color:var(--blue)}
+  button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .primary{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
+  .gate{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px}
+  .gate h2{margin:0 0 6px}
+  .gate p{color:var(--soft);margin:0 0 16px}
+  label{display:block;font-weight:600;font-size:.85rem;margin:12px 0 4px}
+  input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+  .err{color:#c62828;margin-top:10px;font-size:.9rem}
+  main{padding:28px 0 60px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .stat .num{font-size:2.2rem;font-weight:700;line-height:1}
+  .stat span{color:var(--soft);font-size:.9rem}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:26px}
+  .panel h2{margin:0 0 14px;font-size:1.1rem}
+  .bars{display:grid;gap:10px}
+  .bar-row{display:grid;grid-template-columns:minmax(150px,240px) 1fr 34px;gap:12px;align-items:center;font-size:.9rem}
+  .track{height:10px;background:var(--bg);border-radius:6px;overflow:hidden}
+  .fill{height:100%;background:var(--teal);width:0}
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .tools input{max-width:320px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:720px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:.8rem;color:var(--soft);font-weight:600}
+  .chip{display:inline-block;background:rgba(26,154,91,.13);color:var(--green);border-radius:999px;padding:2px 10px;font-size:.8rem;margin:0 4px 4px 0}
+  .chip.prog{background:rgba(47,111,237,.12);color:var(--blue)}
+  .muted{color:var(--soft)}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <h1>SkillBridge admin</h1>
+    <div class="who" id="who" hidden>
+      <span id="whoEmail"></span>
+      <a href="index.html">View site</a>
+      <button id="logout" type="button">Log out</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sign-in -->
+<section class="gate" id="gate" hidden>
+  <h2>Admin sign in</h2>
+  <p>Use the admin account you created on the site.</p>
+  <form id="adminForm">
+    <label for="aEmail">Email</label>
+    <input id="aEmail" type="email" required autocomplete="username">
+    <label for="aPass">Password</label>
+    <input id="aPass" type="password" required autocomplete="current-password">
+    <button class="primary" style="width:100%;margin-top:16px" type="submit">Sign in</button>
+    <div class="err" id="gateErr"></div>
+  </form>
+</section>
+
+<!-- Not admin -->
+<section class="gate" id="denied" hidden>
+  <h2>No access</h2>
+  <p>This account isn't the admin account. Log out and sign in with the admin email.</p>
+  <button id="deniedOut" type="button">Log out</button>
+</section>
+
+<!-- Dashboard -->
+<main class="wrap" id="dash" hidden>
+  <div class="stats">
+    <div class="stat"><div class="num" id="sUsers">0</div><span>Registered users</span></div>
+    <div class="stat"><div class="num" id="sActive">0</div><span>Users who finished a course</span></div>
+    <div class="stat"><div class="num" id="sDone">0</div><span>Course completions</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>Completions by course</h2>
+    <div class="bars" id="bars"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Users</h2>
+    <div class="tools">
+      <input id="search" type="search" placeholder="Search by name or email" aria-label="Search users">
+      <button id="csv" type="button">Download CSV</button>
+      <button id="reload" type="button">Refresh</button>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Last login</th><th>Courses</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="muted" id="empty" hidden>No users yet. Sign up on the site and you'll appear here.</p>
+  </div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, ADMIN_UID } from "./firebase-config.js";
+
+const COURSES = [
+  "Graphic Design Fundamentals", "Web Development & Coding", "Digital Marketing",
+  "IT Support & Networking", "UI/UX Design", "Cybersecurity Fundamentals"
+];
+
+const auth = getAuth(initializeApp(firebaseConfig));
+const db = getFirestore(auth.app);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = t => t && t.toDate ? t.toDate().toLocaleString() : "";
+
+let users = [];
+
+function show(which){
+  ["gate", "denied", "dash"].forEach(id => $(id).hidden = id !== which);
+  $("who").hidden = which === "gate";
+}
+
+$("adminForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("gateErr").textContent = "";
+  try { await signInWithEmailAndPassword(auth, $("aEmail").value.trim(), $("aPass").value); }
+  catch { $("gateErr").textContent = "Wrong email or password."; }
+});
+
+const out = () => signOut(auth);
+$("logout").onclick = out;
+$("deniedOut").onclick = out;
+
+onAuthStateChanged(auth, async u => {
+  if (!u) { show("gate"); return; }
+  $("whoEmail").textContent = u.email;
+  if (u.uid !== ADMIN_UID) { show("denied"); return; }
+  show("dash");
+  await load();
+});
+
+async function load(){
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    users = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    users.sort((a, b) => (b.lastLogin?.seconds || 0) - (a.lastLogin?.seconds || 0));
+    render();
+  } catch (err) {
+    $("rows").innerHTML = `<tr><td colspan="5" class="err">Couldn't load users (${esc(err.code || err.message)}). Check that your Firestore rules are published and ADMIN_UID is correct.</td></tr>`;
+  }
+}
+
+const doneList = u => Object.values(u.progress || {}).filter(p => p.done).map(p => p.course);
+
+function render(){
+  // stats
+  const perCourse = Object.fromEntries(COURSES.map(c => [c, 0]));
+  let completions = 0, active = 0;
+  users.forEach(u => {
+    const d = doneList(u);
+    if (d.length) active++;
+    d.forEach(c => { completions++; if (c in perCourse) perCourse[c]++; });
+  });
+  $("sUsers").textContent = users.length;
+  $("sActive").textContent = active;
+  $("sDone").textContent = completions;
+
+  const max = Math.max(1, ...Object.values(perCourse));
+  $("bars").innerHTML = COURSES.map(c =>
+    `<div class="bar-row"><span>${esc(c)}</span><div class="track"><div class="fill" style="width:${perCourse[c] / max * 100}%"></div></div><strong>${perCourse[c]}</strong></div>`
+  ).join("");
+
+  // table
+  const q = $("search").value.trim().toLowerCase();
+  const list = users.filter(u => !q || (u.name || "").toLowerCase().includes(q) || (u.email || "").toLowerCase().includes(q));
+  $("empty").hidden = users.length > 0;
+  $("rows").innerHTML = list.map(u => {
+    const prog = Object.values(u.progress || {});
+    const chips = prog.length
+      ? prog.map(p => `<span class="chip ${p.done ? "" : "prog"}">${esc(p.course)}${p.done ? " ✓" : " · started"}</span>`).join("")
+      : `<span class="muted">None yet</span>`;
+    return `<tr><td>${esc(u.name || "-")}</td><td>${esc(u.email)}</td><td>${esc(fmt(u.createdAt))}</td><td>${esc(fmt(u.lastLogin))}</td><td>${chips}</td></tr>`;
+  }).join("");
+}
+
+$("search").addEventListener("input", render);
+$("reload").onclick = load;
+
+$("csv").onclick = () => {
+  const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const lines = [["Name", "Email", "Joined", "Last login", "Completed courses"].map(cell).join(",")];
+  users.forEach(u => lines.push([u.name, u.email, fmt(u.createdAt), fmt(u.lastLogin), doneList(u).join("; ")].map(cell).join(",")));
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv" }));
+  a.download = "skillbridge-users.csv";
+  a.click();
+};
+</script>
+</body>
+</html>
