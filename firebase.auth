@@ -1,0 +1,159 @@
+// SkillBridge: real login, user records, and progress sync (Firebase Auth + Firestore)
+// Load on every page that has the login modal:
+//   <script type="module" src="firebase-auth.js"></script>
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, signOut, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, ADMIN_UID } from "./firebase-config.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const KEY = "skillbridge:progress";
+const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const val = id => document.getElementById(id).value.trim();
+
+/* ---------- Error messages ---------- */
+function friendly(err) {
+  const m = {
+    "auth/email-already-in-use": "That email already has an account. Try logging in.",
+    "auth/invalid-email": "That email address doesn't look right.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/invalid-credential": "Wrong email or password.",
+    "auth/user-not-found": "No account with that email. Try signing up.",
+    "auth/wrong-password": "Wrong email or password.",
+    "auth/too-many-requests": "Too many attempts. Wait a minute and try again.",
+    "auth/network-request-failed": "Network problem. Check your connection.",
+    "permission-denied": "Database rules blocked this. Check your Firestore rules."
+  };
+  return m[err.code] || ("Something went wrong: " + (err.code || err.message));
+}
+
+function showError(form, msg) {
+  let p = form.querySelector(".sb-err");
+  if (!p) {
+    p = document.createElement("p");
+    p.className = "sb-err";
+    p.style.cssText = "color:#c62828;font-size:.9rem;margin:10px 0 0";
+    form.appendChild(p);
+  }
+  p.textContent = msg;
+}
+
+/* ---------- Login / signup (replaces the demo handlers) ---------- */
+document.addEventListener("submit", async e => {
+  const f = e.target;
+  if (f.id !== "loginForm" && f.id !== "signupForm") return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+
+  const btn = f.querySelector("button[type=submit]");
+  btn.disabled = true;
+  try {
+    if (f.id === "signupForm") {
+      const name = val("signupName"), email = val("signupEmail"), password = document.getElementById("signupPassword").value;
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+      await setDoc(doc(db, "users", cred.user.uid), {
+        name, email, createdAt: serverTimestamp(), lastLogin: serverTimestamp()
+      }, { merge: true });
+      renderAuth(auth.currentUser);
+    } else {
+      const email = val("loginEmail"), password = document.getElementById("loginPassword").value;
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", cred.user.uid), {
+        email, lastLogin: serverTimestamp()
+      }, { merge: true });
+    }
+    const close = document.getElementById("loginModalClose");
+    if (close) close.click();
+  } catch (err) {
+    showError(f, friendly(err));
+  } finally {
+    btn.disabled = false;
+  }
+}, true); // capture phase: runs before the old demo handlers
+
+/* ---------- Nav area ---------- */
+function renderAuth(u) {
+  const a = document.getElementById("authArea");
+  if (!a || !u) return;
+  const name = u.displayName || (u.email || "").split("@")[0];
+  const admin = u.uid === ADMIN_UID
+    ? `<a href="admin.html" style="font-weight:600;margin-right:10px">Admin</a>` : "";
+  a.innerHTML = `${admin}<span style="margin-right:10px">Hi, ${esc(name)}</span>` +
+    `<button type="button" id="sbLogout" style="cursor:pointer;border:1px solid currentColor;background:none;border-radius:6px;padding:6px 10px;font:inherit;color:inherit">Log out</button>`;
+  document.getElementById("sbLogout").onclick = async () => {
+    await signOut(auth);
+    sessionStorage.removeItem("sb_sync");
+    location.reload();
+  };
+}
+
+/* ---------- Progress: browser -> cloud ---------- */
+let lastCloudWrite = 0;
+window.sbSaveProgress = async (course, data) => {
+  const u = auth.currentUser;
+  if (!u) return;
+  const now = Date.now();
+  if (!data.done && now - lastCloudWrite < 30000) return; // limit writes while a video plays
+  lastCloudWrite = now;
+  try {
+    await setDoc(doc(db, "users", u.uid), {
+      progress: {
+        [slug(course)]: {
+          course, done: !!data.done,
+          seconds: Math.floor(data.seconds || 0),
+          updatedAt: serverTimestamp()
+        }
+      }
+    }, { merge: true });
+  } catch (err) {
+    console.warn("Progress not saved:", err.code || err.message);
+  }
+};
+
+/* ---------- Progress: cloud -> browser (on login) ---------- */
+async function syncProgress(u) {
+  const snap = await getDoc(doc(db, "users", u.uid));
+  const cloud = snap.exists() ? (snap.data().progress || {}) : {};
+  let local;
+  try { local = JSON.parse(localStorage.getItem(KEY)) || { done: {}, time: {} }; }
+  catch (e) { local = { done: {}, time: {} }; }
+
+  let changed = false;
+  const cloudCourses = new Set();
+  for (const k in cloud) {
+    const c = cloud[k];
+    cloudCourses.add(c.course);
+    if (c.done && !local.done[c.course]) { local.done[c.course] = true; changed = true; }
+    if ((c.seconds || 0) > (local.time[c.course] || 0)) { local.time[c.course] = c.seconds; changed = true; }
+  }
+  // Anything finished before logging in gets pushed up
+  for (const course in local.done) {
+    if (local.done[course] && !(cloud[slug(course)] && cloud[slug(course)].done)) {
+      await window.sbSaveProgress(course, { done: true, seconds: local.time[course] || 0 });
+    }
+  }
+  if (changed) {
+    localStorage.setItem(KEY, JSON.stringify(local));
+    if (sessionStorage.getItem("sb_sync") !== u.uid) {
+      sessionStorage.setItem("sb_sync", u.uid);
+      location.reload(); // so the video popup picks up the merged progress
+    }
+  }
+}
+
+onAuthStateChanged(auth, u => {
+  if (!u) return;
+  renderAuth(u);
+  syncProgress(u).catch(err => console.warn("Sync failed:", err.code || err.message));
+});
