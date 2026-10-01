@@ -379,7 +379,7 @@
   function tick(){
     if(!player || !ready || !active || player.getPlayerState()!==1) return;
     const t = player.getCurrentTime(), d = player.getDuration(); if(!d) return;
-    progress.time[active] = t; save();
+    progress.time[active] = t; save()   if (window.sbSaveProgress) window.sbSaveProgress(active, {done:false, seconds:t});;
     const pct = Math.round(t/d*100);
     $("sbvFill").style.width = pct+"%";
     if(!progress.done[active]) $("sbvStatus").textContent = "Watched "+pct+"%";
