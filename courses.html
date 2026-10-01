@@ -370,7 +370,7 @@
 
   function markDone(name){
     if(progress.done[name]) return;
-    progress.done[name] = true; save();
+    progress.done[name] = true; save()   if (window.sbSaveProgress) window.sbSaveProgress(name, {done:true, seconds:progress.time[name]||0});;
     $("sbvStatus").textContent = "Course complete ✓";
     document.querySelectorAll(".sbv-btn").forEach(b => { if(b.dataset.course===name) label(b,name); });
     // Certificate step goes here later
